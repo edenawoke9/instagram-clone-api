@@ -1,0 +1,43 @@
+app = "instagram-clone-api"
+build = { }
+console_command = "/rails/bin/rails console"
+primary_region = "cdg"
+
+[env]
+DATABASE_URL = "sqlite3:///data/production.sqlite3"
+PORT = "8080"
+
+[http_service]
+auto_start_machines = true
+auto_stop_machines = true
+force_https = true
+internal_port = 8_080
+min_machines_running = 0
+processes = [ "app" ]
+
+  [[http_service.checks]]
+  grace_period = "5s"
+  interval = "10s"
+  method = "GET"
+  path = "/up"
+  protocol = "http"
+  timeout = "2s"
+  tls_skip_verify = false
+
+    [http_service.checks.headers]
+    X-Forwarded-Proto = "https"
+
+[[mounts]]
+auto_extend_size_increment = "1GB"
+auto_extend_size_limit = "10GB"
+auto_extend_size_threshold = 80
+destination = "/data"
+source = "data"
+
+[processes]
+app = "./bin/rails server"
+
+[[vm]]
+cpu_kind = "shared"
+cpus = 1
+memory = "512mb"

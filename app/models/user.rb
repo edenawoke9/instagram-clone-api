@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+
+    after_create :send_welcome_email
+
     has_secure_password
     validates :email, uniqueness: true
     validates :password, presence: true
@@ -11,5 +14,10 @@ class User < ApplicationRecord
         errors.add(:base, "At least one of email, phone number, or username must be present")
       end
     end
+
+    def send_welcome_email
+      # TODO: email sending logic
+    end
+
   end
   
