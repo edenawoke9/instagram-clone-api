@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :posts
+  has_many :stories
   has_many :comments
 
     after_create :send_welcome_email
