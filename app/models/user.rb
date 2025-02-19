@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :posts
+  has_many :comments
 
     after_create :send_welcome_email
 
@@ -6,6 +8,7 @@ class User < ApplicationRecord
     validates :email, uniqueness: true
     validates :password, presence: true
     validate :at_least_one_contact_info
+
   
     private
   
