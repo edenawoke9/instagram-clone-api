@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resource :users do 
+    resource :stories
     resource :posts do 
       resource :comments 
     end
