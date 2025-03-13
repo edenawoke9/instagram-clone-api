@@ -1,9 +1,9 @@
 class StoriesController < ApplicationController
-    before_action :authorize
+    
   
     def index
-      @stories = Story.includes(:user).order(created_at: :desc)
-      render json: @stories, status: :ok
+      stories = Story.includes(:user).order(created_at: :desc)
+      render json: stories.as_json(include: { user: { only: [:name,:image,:username] } }), status: :ok
     end
   
     def create
