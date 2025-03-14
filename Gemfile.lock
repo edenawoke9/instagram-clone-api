@@ -111,6 +111,8 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.10.0)
+    jwt (2.10.1)
+      base64
     kamal (2.5.2)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -321,6 +323,7 @@ DEPENDENCIES
   brakeman
   debug
   dockerfile-rails (>= 1.7)
+  jwt
   kamal
   puma (>= 5.0)
   rails (~> 8.0.1)

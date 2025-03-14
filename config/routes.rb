@@ -1,18 +1,31 @@
 Rails.application.routes.draw do
-  resource :users do 
-    resource :stories
-    resource :posts do 
-      resource :comments 
+  # Route for fetching followers and following of a user
+  get "users/:id/followers", to: "users#followers"
+  get "users/:id/following", to: "users#following"
+
+  resources :users do
+    resources :stories
+    get "reels", to: "posts#reel"
+    get "get_comments", to: "posts#get_comments"
+    get "individual_post", to: "posts#individual_post"
+    resources :posts do
+      resources :comments
+      
     end
   end
-  resource :sessions
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
- 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Separate follows routes (create and destroy follow relationships)
+  resources :follows, only: [:create, :destroy]
+  get 'sent_messages', to: 'messages#sent_messages'
+  get 'received_messages', to: 'messages#received_messages'
+  resources :messages
+
+  # Session routes for login/logout
+  resources :sessions, only: [:create, :destroy]
+
+  # Route to check app health
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Root route
+  root "posts#index"
 end
