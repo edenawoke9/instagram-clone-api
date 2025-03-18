@@ -7,7 +7,7 @@ class PostsController < ApplicationController
     end
     def reel 
       posts=Post.includes(:user).where(is_video:true).order(created_at: :desc)
-      render json: posts, status: :ok
+      render json: posts.as_json(include: {user:{only: [:name,:image,:username]}}), status: :ok
 
     end
     def individual_post
@@ -48,7 +48,7 @@ class PostsController < ApplicationController
     private 
   
     def post_params
-      params.require(:post).permit(:image, :description, :likes)  
+      params.require(:post).permit(:image, :description, :likes,:is_video)  
     end
   end
   

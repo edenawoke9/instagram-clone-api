@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id # Store user ID in the session
-      render json: { message: "Authenticated successfully" }, status: :ok
+      render json: {user: user, message: "Authenticated successfully" }, status: :ok
     else
       render json: { message: "The credentials are not correct" }, status: :unauthorized
     end
